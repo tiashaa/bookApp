@@ -1,41 +1,41 @@
-import React from 'react'
+import React, { Component }  from 'react';
+import {useState, useEffect} from 'react'
+import CountryList from './CountryList'
 
-const TagsInput = props => {
-	const [tags, setTags] = React.useState(props.tags);
-	const removeTags = indexToRemove => {
+function TagsInput() {
+	const [tags, setTags]=useState(["t1","t2"]);
+	const addTags=(events)=>{
+			if(events.key=="Enter"){
+				
+				setTags([...tags,events.target.value])
+				events.target.value='';
+			}
+	}
+	const removeTags=(indexToRemove)=>{
 		setTags([...tags.filter((_, index) => index !== indexToRemove)]);
-	};
-	const addTags = event => {
-		if (event.target.value !== "") {
-			setTags([...tags, event.target.value]);
-			props.selectedTags([...tags, event.target.value]);
-			event.target.value = "";
-		}
-	};
+	
+
+	}
 	return (
-		<div className="tags-input">
-			<ul id="tags">
-				{tags.map((tag, index) => {
-					return (
-						<li key={index} className="tag">
-							<span className='tag-title'>{tag}</span>
-							<span className='tag-close-icon'
-								onClick={() => removeTags(index)}
-							>
-								x
-							</span>
-						</li>
-					);
-				})}
+		<div className='TagsInput'>
+			<ul>
+				{
+					tags.map((tag, index)=>
+					<li key={index}>
+					<span>
+						{tag}
+					</span>
+					<i className='material-icons' onClick={() => removeTags(index)}>closed</i> 
+				</li>
+					)
+				}
+				
+				<input type='text' placeholder='enter the country name' onKeyUp={addTags}/>
 			</ul>
-			<input
-				type="text"
-				onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
-				placeholder="Press enter to add tags"
-			/>
 		</div>
-	);
-};
+	)
+}
 
 export default TagsInput
+
 

@@ -3,6 +3,7 @@ import CountryDetail from './CountryDetail'
 import {useState, useEffect} from 'react'
 import axios from "axios";
 import ReactDOM from "react-dom";
+import TagsInput from './TagsInput'
 
 function CountryList() {
     const [countries, setCountries] = useState([]);
@@ -27,6 +28,7 @@ function CountryList() {
       setFilteredCountries(
         countries.filter((country) =>
           country.name.toLowerCase().includes(search.toLowerCase())
+         
         )
       );
     }, [search, countries]);
